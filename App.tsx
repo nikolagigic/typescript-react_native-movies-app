@@ -11,12 +11,16 @@
 import React, { useEffect } from 'react'
 import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+import { WelcomeComponent } from './components/WelcomeComponent/WelcomeComponent'
+import { LoginComponent } from './components/LoginComponent/LoginComponent'
 import { AuthContext } from './components/context'
 
 import { styles, backgroundStyle } from './styles'
 
 const App = () => {
-  const [isLoading, setIsLoading] = React.useState(true)
+  const [isLoading, setIsLoading] = React.useState(false)
   const [userToken, setUserToken] = React.useState('')
 
   const authContext = React.useMemo(
@@ -47,7 +51,11 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={authContext}>
-      <SafeAreaView style={backgroundStyle}></SafeAreaView>
+      {userToken === '' ? (
+        <WelcomeComponent />
+      ) : (
+        <SafeAreaView style={backgroundStyle}></SafeAreaView>
+      )}
     </AuthContext.Provider>
   )
 }
