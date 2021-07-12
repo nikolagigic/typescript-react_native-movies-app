@@ -8,6 +8,7 @@ import { Button } from 'react-native-paper'
 
 import { LoginComponent } from '../LoginComponent/LoginComponent'
 import { SignupComponent } from '../SignupComponent/SignupComponent'
+import { HomeComponent } from '../HomeComponent/HomeComponent'
 
 const AuthStack = createStackNavigator()
 
@@ -39,6 +40,7 @@ export const WelcomeComponent = () => {
         <AuthStack.Screen name="Welcome" component={WelcomeScreen} />
         <AuthStack.Screen name="Sign In" component={LoginComponent} />
         <AuthStack.Screen name="Sign Up" component={SignupComponent} />
+        <AuthStack.Screen name="Home" component={HomeComponent} />
       </AuthStack.Navigator>
     </NavigationContainer>
   )

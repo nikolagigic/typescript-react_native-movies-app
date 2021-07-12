@@ -6,21 +6,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { Divider, TextInput, Button } from 'react-native-paper'
 
-const handleLogIn = async (email: string, password: string) => {
-  AsyncStorage.multiGet(['email', 'password']).then((res) => {
-    console.log(res)
+function handleLogIn(email: string, password: string) {
+  return AsyncStorage.multiGet(['email', 'password']).then((res) => {
     const getEmail = res[0][1]
     const getPassword = res[1][1]
 
-    if (getEmail === email && getPassword === getPassword) {
-      console.log('Success!')
+    if (getEmail === email && getPassword === password) {
+      return true
     } else {
-      console.log('Login Failed!')
+      return false
     }
   })
 }
 
-export const LoginComponent = () => {
+export const LoginComponent = ({ navigation }: any) => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
 
@@ -45,7 +44,11 @@ export const LoginComponent = () => {
       <Button
         style={{ marginLeft: '25%', marginTop: '5%', width: '50%' }}
         mode="contained"
-        onPress={() => handleLogIn(username, password)}
+        onPress={() => {
+          handleLogIn(username, password).then((isLoggedIn) => {
+            if (isLoggedIn) navigation.navigate('Home')
+          })
+        }}
       >
         Log In
       </Button>
