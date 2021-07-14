@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { Divider, TextInput, Button } from 'react-native-paper'
 
+import { AuthContext } from '../context'
+
 const handleSignup = async (
   fullName: string,
   email: string,
@@ -15,7 +17,6 @@ const handleSignup = async (
     ['fullName', fullName],
     ['email', email],
     ['password', password],
-    ['loggedIn', 'true'],
   ])
 }
 
@@ -23,6 +24,8 @@ export const SignupComponent = ({ navigation }: any) => {
   const [fullName, setFullName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+
+  const { signIn }: any = React.useContext(AuthContext)
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', margin: '5%' }}>
@@ -54,7 +57,7 @@ export const SignupComponent = ({ navigation }: any) => {
         mode="contained"
         onPress={() => {
           handleSignup(fullName, email, password)
-          navigation.navigate('Home')
+          signIn()
         }}
       >
         Sign Up

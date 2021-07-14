@@ -4,7 +4,7 @@ import { Text } from 'react-native'
 
 import { AuthContext } from '../context'
 
-export const SignOutComponent = ({ navigation }: any) => {
+export const SignOutComponent = () => {
   const { signOut }: any = React.useContext(AuthContext)
 
   useEffect(() => {

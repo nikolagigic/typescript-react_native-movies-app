@@ -52,7 +52,7 @@ export const LoginComponent = ({ navigation }: any) => {
           handleLogIn(username, password).then((isLoggedIn) => {
             if (isLoggedIn) {
               signIn()
-              navigation.navigate('Home')
+              navigation.navigate('Currently Playing Movies')
             }
           })
         }}

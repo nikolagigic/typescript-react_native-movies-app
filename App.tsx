@@ -8,22 +8,20 @@
  * @format
  */
 
-import React, { useEffect } from 'react'
-import { ActivityIndicator, SafeAreaView, View } from 'react-native'
-
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import React from 'react'
+import { ActivityIndicator, View } from 'react-native'
 
 import { WelcomeComponent } from './components/WelcomeComponent/WelcomeComponent'
-import { LoginComponent } from './components/LoginComponent/LoginComponent'
-import { HomeComponent } from './components/HomeComponent/HomeComponent'
+import { MoviesComponent } from './components/MoviesComponent/MoviesComponent'
 import { SignOutComponent } from './components/SignOutComponent/SignOutComponent'
+import { MovieDetailsComponent } from './components/MovieDetailsComponent/MovieDetailsComponent'
 
 import { AuthContext } from './components/context'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import { styles, backgroundStyle } from './styles'
+import { styles } from './styles'
 
 const Drawer = createDrawerNavigator()
 
@@ -63,9 +61,22 @@ const App = () => {
         {userToken === '' ? (
           <WelcomeComponent />
         ) : (
-          <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="Home" component={HomeComponent} />
+          <Drawer.Navigator initialRouteName="Currently Playing Movies">
+            <Drawer.Screen
+              name="Currently Playing Movies"
+              component={MoviesComponent}
+            />
+            <Drawer.Screen name="Upcoming Movies" component={MoviesComponent} />
             <Drawer.Screen name="Sign Out" component={SignOutComponent} />
+            <Drawer.Screen
+              name="Movie Details"
+              component={MovieDetailsComponent}
+              options={{
+                drawerLabel: () => null,
+                drawerIcon: () => null,
+                title: null,
+              }}
+            />
           </Drawer.Navigator>
         )}
       </NavigationContainer>

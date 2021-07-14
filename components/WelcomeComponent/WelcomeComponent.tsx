@@ -1,15 +1,14 @@
 import React from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
-import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import { View } from 'react-native'
 import { Button } from 'react-native-paper'
 
 import { LoginComponent } from '../LoginComponent/LoginComponent'
 import { SignupComponent } from '../SignupComponent/SignupComponent'
-import { HomeComponent } from '../HomeComponent/HomeComponent'
-import { SignOutComponent } from '../SignOutComponent/SignOutComponent'
+import { MoviesComponent } from '../MoviesComponent/MoviesComponent'
 
 const AuthStack = createStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -35,24 +34,16 @@ const WelcomeScreen = ({ navigation }: any) => {
   )
 }
 
-export const WelcomeComponent = (props: any, { navigation }: any) => {
-  console.log(props)
-
-  return !props.isLoggedIn ? (
+export const WelcomeComponent = () => {
+  return (
     <AuthStack.Navigator>
       <AuthStack.Screen name="Welcome" component={WelcomeScreen} />
       <AuthStack.Screen name="Sign In" component={LoginComponent} />
       <AuthStack.Screen name="Sign Up" component={SignupComponent} />
       <AuthStack.Screen
-        name="Home"
-        component={HomeComponent}
-        options={{ headerLeft: () => null, gestureEnabled: false }}
-      ></AuthStack.Screen>
+        name="Currently Playing Movies"
+        component={MoviesComponent}
+      />
     </AuthStack.Navigator>
-  ) : (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Home" component={HomeComponent} />
-      <Drawer.Screen name="Sign Out" component={SignOutComponent} />
-    </Drawer.Navigator>
   )
 }
