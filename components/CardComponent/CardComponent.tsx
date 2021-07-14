@@ -3,7 +3,7 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper'
 
 export const CardComponent = () => (
   <Card
-    style={{ margin: '2.5%' }}
+    style={{ marginHorizontal: '5%', marginVertical: '2.5%' }}
     onPress={() => {
       console.log('clicked on card')
     }}

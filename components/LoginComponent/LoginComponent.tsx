@@ -6,13 +6,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { Divider, TextInput, Button } from 'react-native-paper'
 
+import { AuthContext } from '../context'
+
 function handleLogIn(email: string, password: string) {
   return AsyncStorage.multiGet(['email', 'password']).then((res) => {
     const getEmail = res[0][1]
     const getPassword = res[1][1]
 
     if (getEmail === email && getPassword === password) {
-      AsyncStorage.setItem('loggedIn', 'true')
       return true
     } else {
       return false
@@ -23,6 +24,8 @@ function handleLogIn(email: string, password: string) {
 export const LoginComponent = ({ navigation }: any) => {
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
+
+  const { signIn }: any = React.useContext(AuthContext)
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', margin: '5%' }}>
@@ -47,7 +50,10 @@ export const LoginComponent = ({ navigation }: any) => {
         mode="contained"
         onPress={() => {
           handleLogIn(username, password).then((isLoggedIn) => {
-            if (isLoggedIn) navigation.navigate('Home')
+            if (isLoggedIn) {
+              signIn()
+              navigation.navigate('Home')
+            }
           })
         }}
       >

@@ -1,11 +1,7 @@
 import React from 'react'
 
-import { Screen } from 'react-native-screens'
-import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { createDrawerNavigator } from '@react-navigation/drawer'
-
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer'
 
 import { View } from 'react-native'
 import { Button } from 'react-native-paper'
@@ -13,6 +9,7 @@ import { Button } from 'react-native-paper'
 import { LoginComponent } from '../LoginComponent/LoginComponent'
 import { SignupComponent } from '../SignupComponent/SignupComponent'
 import { HomeComponent } from '../HomeComponent/HomeComponent'
+import { SignOutComponent } from '../SignOutComponent/SignOutComponent'
 
 const AuthStack = createStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -38,29 +35,24 @@ const WelcomeScreen = ({ navigation }: any) => {
   )
 }
 
-export const WelcomeComponent = () => {
-  let isLoggedIn = AsyncStorage.getItem('loggedIn') != null
+export const WelcomeComponent = (props: any, { navigation }: any) => {
+  console.log(props)
 
-  console.log(isLoggedIn)
-
-  return !isLoggedIn ? (
-    <NavigationContainer>
-      <AuthStack.Navigator>
-        <AuthStack.Screen name="Welcome" component={WelcomeScreen} />
-        <AuthStack.Screen name="Sign In" component={LoginComponent} />
-        <AuthStack.Screen name="Sign Up" component={SignupComponent} />
-        <AuthStack.Screen
-          name="Home"
-          component={HomeComponent}
-          options={{ headerLeft: () => null, gestureEnabled: false }}
-        />
-      </AuthStack.Navigator>
-    </NavigationContainer>
+  return !props.isLoggedIn ? (
+    <AuthStack.Navigator>
+      <AuthStack.Screen name="Welcome" component={WelcomeScreen} />
+      <AuthStack.Screen name="Sign In" component={LoginComponent} />
+      <AuthStack.Screen name="Sign Up" component={SignupComponent} />
+      <AuthStack.Screen
+        name="Home"
+        component={HomeComponent}
+        options={{ headerLeft: () => null, gestureEnabled: false }}
+      ></AuthStack.Screen>
+    </AuthStack.Navigator>
   ) : (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeComponent} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen name="Home" component={HomeComponent} />
+      <Drawer.Screen name="Sign Out" component={SignOutComponent} />
+    </Drawer.Navigator>
   )
 }

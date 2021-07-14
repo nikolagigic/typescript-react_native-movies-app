@@ -15,9 +15,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { WelcomeComponent } from './components/WelcomeComponent/WelcomeComponent'
 import { LoginComponent } from './components/LoginComponent/LoginComponent'
+import { HomeComponent } from './components/HomeComponent/HomeComponent'
+import { SignOutComponent } from './components/SignOutComponent/SignOutComponent'
+
 import { AuthContext } from './components/context'
 
+import { NavigationContainer } from '@react-navigation/native'
+import { createDrawerNavigator } from '@react-navigation/drawer'
+
 import { styles, backgroundStyle } from './styles'
+
+const Drawer = createDrawerNavigator()
 
 const App = () => {
   const [isLoading, setIsLoading] = React.useState(false)
@@ -51,11 +59,16 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={authContext}>
-      {userToken === '' ? (
-        <WelcomeComponent />
-      ) : (
-        <SafeAreaView style={backgroundStyle}></SafeAreaView>
-      )}
+      <NavigationContainer>
+        {userToken === '' ? (
+          <WelcomeComponent />
+        ) : (
+          <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Screen name="Home" component={HomeComponent} />
+            <Drawer.Screen name="Sign Out" component={SignOutComponent} />
+          </Drawer.Navigator>
+        )}
+      </NavigationContainer>
     </AuthContext.Provider>
   )
 }
