@@ -12,6 +12,7 @@ function handleLogIn(email: string, password: string) {
     const getPassword = res[1][1]
 
     if (getEmail === email && getPassword === password) {
+      AsyncStorage.setItem('loggedIn', 'true')
       return true
     } else {
       return false

@@ -15,10 +15,11 @@ const handleSignup = async (
     ['fullName', fullName],
     ['email', email],
     ['password', password],
+    ['loggedIn', 'true'],
   ])
 }
 
-export const SignupComponent = () => {
+export const SignupComponent = ({ navigation }: any) => {
   const [fullName, setFullName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -51,7 +52,10 @@ export const SignupComponent = () => {
       <Button
         style={{ marginLeft: '25%', marginTop: '5%', width: '50%' }}
         mode="contained"
-        onPress={() => handleSignup(fullName, email, password)}
+        onPress={() => {
+          handleSignup(fullName, email, password)
+          navigation.navigate('Home')
+        }}
       >
         Sign Up
       </Button>
