@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Card, Paragraph } from 'react-native-paper'
+import { Card, Paragraph, Text } from 'react-native-paper'
 
 import { MovieDetailsInterface } from '../interfaces'
 

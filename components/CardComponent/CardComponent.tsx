@@ -2,15 +2,11 @@ import * as React from 'react'
 
 import { useNavigation } from '@react-navigation/native'
 
-import { Card, Paragraph } from 'react-native-paper'
-
-import { MovieDetailsInterface } from '../interfaces'
+import { Card, Paragraph, Text } from 'react-native-paper'
 
 export const CardComponent = ({ props }: any) => {
   const navigation = useNavigation()
   const movie = props
-
-  console.log(movie.popularity)
 
   return (
     <Card
@@ -20,10 +16,23 @@ export const CardComponent = ({ props }: any) => {
       }}
     >
       <Card.Title title={movie.original_title} subtitle={movie.title} />
-      <Card.Content>
-        <Paragraph>{movie.overview}</Paragraph>
-      </Card.Content>
       <Card.Cover source={{ uri: movie.poster_path }} />
+      <Card.Content
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginHorizontal: '5%',
+          marginTop: '5%',
+        }}
+      >
+        <Text style={{ flex: 1, left: 0 }}>
+          Populariy: {Math.trunc(movie.popularity)}
+        </Text>
+        <Text style={{ flex: 1, right: 0 }}>
+          Average Vote: {Math.trunc(movie.vote_average)}
+        </Text>
+      </Card.Content>
     </Card>
   )
 }

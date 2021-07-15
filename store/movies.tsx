@@ -15,11 +15,12 @@ export const getUpcomingMovies = () => {
 
 export function createMoviesStore() {
   return {
-    movies: [] as MovieDetailsInterface[],
+    nowPlayingMovies: [] as MovieDetailsInterface[],
+    upcomingMovies: [] as MovieDetailsInterface[],
     loadNowPlayingMovies() {
       getNowPlayingMovies().then((res) => {
         runInAction(() => {
-          this.movies = res.data.results.map((result: any) => {
+          this.nowPlayingMovies = res.data.results.map((result: any) => {
             let movie: MovieDetailsInterface = {
               id: result.id,
               overview: result.overview,
@@ -32,14 +33,14 @@ export function createMoviesStore() {
             }
             return movie
           })
-          this.sortByPopularity()
+          this.sortByPopularity(this.nowPlayingMovies)
         })
       })
     },
     loadUpcomingMovies() {
       getUpcomingMovies().then((res) => {
         runInAction(() => {
-          this.movies = res.data.results.map((result: any) => {
+          this.upcomingMovies = res.data.results.map((result: any) => {
             let movie: MovieDetailsInterface = {
               id: result.id,
               overview: result.overview,
@@ -52,13 +53,13 @@ export function createMoviesStore() {
             }
             return movie
           })
-          this.sortByPopularity()
+          this.sortByPopularity(this.upcomingMovies)
         })
       })
     },
-    sortByPopularity() {
-      this.movies.sort((x, y): any => {
-        return x.popularity > y.popularity
+    sortByPopularity(movies: MovieDetailsInterface[]) {
+      movies.sort((x, y): any => {
+        return x.popularity < y.popularity
       })
     },
   }
